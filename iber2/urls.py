@@ -29,5 +29,5 @@ urlpatterns = [
     path('', include('product.urls')),
     path('', include('customermsg.urls')),    
     #re_path(r'^media/(?P<path>.*)$', serve ,{'document_root' :settings.MEDIA_ROOT}),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
 
