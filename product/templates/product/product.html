@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+{% block title %}{{product.title}}|{% endblock %}
+{% block content %}
+
+<div class="container">
+  
+ {% if messages %}
+ {% for message in messages %}
+ <div class="notification is-primary">
+  <button class="delete"></button>
+      {{message}}
+</div>
+ {% endfor %}
+{% endif %}
+ <div class="row">
+     
+  {% if product.image %}
+  <div class="card col-md-5 col-sm-12 orderCard">
+      <img class="col-sm-12 col-sm-12 orderImg "  src="{{ product.image.url }}" alt="">
+ </div>
+ {% endif %}
+  <div class="container " style="padding-top:2vh;height:15vh; ">
+       <span class="is-size-4" style="font-weight: bold;" >{{ product.vendor.name }}</span>
+            <h1 class=" is-size-5 has-text-weight-bold mt-3"> {{ product.title }} - {{ product.price }} Rsd. </h1>
+            <p class="is-size-6 mt-2"> {{ product.description }}</p>
+            <form  method="POST">
+              {% csrf_token %}
+          
+              <div class="field has-addons mt-5">
+                   <div class="control">   
+                    <input type="hidden" class="input" name="quantity" value="1">
+                  <div class="control">
+                 </div>
+                 
+                   <div class="control">
+                    <button  style="background-color: #dd4928; color:#fff; " class="button  is-uppercase">Dodaj u korpu</button>
+                 </div>
+              </div>
+            
+            </form>
+</div>
+</div>
+  <h1 class="py-5 is-size-4" style="margin-top:15vh; font-weight: bold;">Slične kategorije</h1>
+  <div class="container d-flex" >
+   {% if similar_products %}
+   {% for product in similar_products %}
+       {% include 'product/parts/list_item.html' %}
+   {% endfor %}
+   </div>
+  {% endif %}
+  </div>
+  </div>  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    const $notification = $delete.parentNode;
+
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
+})
+  </script>
+  {% endblock %}
+ 
